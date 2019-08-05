@@ -102,7 +102,22 @@ Compiler.prototype.pass1 = function(program) {
 };
 
 Compiler.prototype.pass2 = function(ast) {
-  return ast;
+  let a = ast.a;
+
+  if (a.op !== "arg" && a.op !== "imm") {
+    a = this.pass2(a);
+  }
+
+  let b = ast.b;
+  if (b.op !== "arg" && b.op !== "imm") {
+    b = this.pass2(b);
+  }
+
+  if (a.op === "imm" && b.op === "imm") {
+    return { op: "imm", n: eval(`${a.n}${ast.op}${b.n}`) };
+  }
+
+  return { op: ast.op, a, b };
 };
 
 Compiler.prototype.pass3 = function(ast) {
