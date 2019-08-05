@@ -120,6 +120,48 @@ describe("compiler", () => {
       expect(pass2Result).toEqual(expectedResult);
     });
   });
+
+  describe("pass3", () => {
+    it("machine code 1", () => {
+      var prog = "[ x ] x + 2*5";
+
+      var compiler = new Compiler();
+      var pass1Result = compiler.pass1(prog);
+      var pass2Result = compiler.pass2(pass1Result);
+      var machineInstructions = compiler.pass3(pass2Result);
+
+      expect(simulate(machineInstructions, [1])).toBe(11);
+      expect(simulate(machineInstructions, [-1])).toBe(9);
+      expect(machineInstructions).toMatchSnapshot();
+    });
+
+    it("machine code 2", () => {
+      var prog = "[ x y ] x * 2 + y * 5";
+
+      var compiler = new Compiler();
+      var pass1Result = compiler.pass1(prog);
+      var pass2Result = compiler.pass2(pass1Result);
+      var machineInstructions = compiler.pass3(pass2Result);
+
+      expect(simulate(machineInstructions, [1, 1])).toBe(7);
+      expect(simulate(machineInstructions, [0.5, 2])).toBe(11);
+      expect(machineInstructions).toMatchSnapshot();
+    });
+
+    it("example 1", () => {
+      var prog = "[ x y z ] ( 2 * 3 * x + 5*y - 3*z ) / (1 + 3 + 2*2)";
+
+      var compiler = new Compiler();
+      var pass1Result = compiler.pass1(prog);
+      var pass2Result = compiler.pass2(pass1Result);
+      var machineInstructions = compiler.pass3(pass2Result);
+
+      expect(machineInstructions).toMatchSnapshot();
+      expect(simulate(machineInstructions, [4, 0, 0])).toBe(3);
+      expect(simulate(machineInstructions, [4, 8, 0])).toBe(8);
+      expect(simulate(machineInstructions, [4, 8, 16])).toBe(2);
+    });
+  });
 });
 
 // var prog = '[ x y z ] ( 2 * 3 * x + 5*y - 3*z ) / (1 + 3 + 2*2)';

@@ -121,7 +121,32 @@ Compiler.prototype.pass2 = function(ast) {
 };
 
 Compiler.prototype.pass3 = function(ast) {
-  // return assembly instructions
+  if (ast.op === "imm") {
+    return `IM ${ast.n}`;
+  }
+  if (ast.op === "arg") {
+    return `AR ${ast.n}`;
+  }
+  if (ast.op === "+") {
+    const aInstructions = this.pass3(ast.a);
+    const bInstructions = this.pass3(ast.b);
+    return [].concat(aInstructions, "PU", bInstructions, "SW", "PO", "AD");
+  }
+  if (ast.op === "-") {
+    const aInstructions = this.pass3(ast.a);
+    const bInstructions = this.pass3(ast.b);
+    return [].concat(aInstructions, "PU", bInstructions, "SW", "PO", "SU");
+  }
+  if (ast.op === "*") {
+    const aInstructions = this.pass3(ast.a);
+    const bInstructions = this.pass3(ast.b);
+    return [].concat(aInstructions, "PU", bInstructions, "SW", "PO", "MU");
+  }
+  if (ast.op === "/") {
+    const aInstructions = this.pass3(ast.a);
+    const bInstructions = this.pass3(ast.b);
+    return [].concat(aInstructions, "PU", bInstructions, "SW", "PO", "DI");
+  }
 };
 
 module.exports = { Compiler };

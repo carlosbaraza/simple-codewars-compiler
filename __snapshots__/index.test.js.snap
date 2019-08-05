@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`compiler pass3 example 1 1`] = `
+Array [
+  "IM 6",
+  "PU",
+  "AR 0",
+  "SW",
+  "PO",
+  "MU",
+  "PU",
+  "IM 5",
+  "PU",
+  "AR 1",
+  "SW",
+  "PO",
+  "MU",
+  "SW",
+  "PO",
+  "AD",
+  "PU",
+  "IM 3",
+  "PU",
+  "AR 2",
+  "SW",
+  "PO",
+  "MU",
+  "SW",
+  "PO",
+  "SU",
+  "PU",
+  "IM 8",
+  "SW",
+  "PO",
+  "DI",
+]
+`;
+
+exports[`compiler pass3 machine code 1 1`] = `
+Array [
+  "AR 0",
+  "PU",
+  "IM 10",
+  "SW",
+  "PO",
+  "AD",
+]
+`;
+
+exports[`compiler pass3 machine code 2 1`] = `
+Array [
+  "AR 0",
+  "PU",
+  "IM 2",
+  "SW",
+  "PO",
+  "MU",
+  "PU",
+  "AR 1",
+  "PU",
+  "IM 5",
+  "SW",
+  "PO",
+  "MU",
+  "SW",
+  "PO",
+  "AD",
+]
+`;
